@@ -17,6 +17,7 @@ import "./App.css";
 
 // fontawesome
 import initFontAwesome from "./utils/initFontAwesome";
+import { MFAUpsell } from "./views/MFAUpsell";
 
 initFontAwesome();
 
@@ -34,17 +35,23 @@ const App = () => {
   return (
     <Router history={history}>
       <div id="app" className="d-flex flex-column h-100">
-        <NavBar />
-        <Container className="flex-grow-1 mt-5">
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/external-api" component={ExternalApi} />
-            <Route path="/mfa-out"  component={MFAOptoutPage} />
-          </Switch>
-        </Container>
-        <Footer />
+        <Switch>
+          <Route path="/mfa-upsell" component={MFAUpsell} />
+        <Route>
+          <NavBar />
+            <Container className="flex-grow-1 mt-5">
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/profile" component={Profile} />
+                <Route path="/external-api" component={ExternalApi} />
+                <Route path="/mfa-out"  component={MFAOptoutPage} />
+              </Switch>
+            </Container>
+            <Footer />
+          </Route>
+        </Switch>
       </div>
+      
     </Router>
   );
 };

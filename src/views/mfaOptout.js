@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../components/Loading";
 
 export const MFAOptoutPage = () => {
-    const { isAuthenticated, user, getIdTokenClaims, getAccessTokenWithPopup } = useAuth0();
+    const { getAccessTokenWithPopup } = useAuth0();
     const [accessToken, setAccessToken] = useState('')
     const [isFinished, setFinishedState] = useState('')
 
@@ -22,7 +22,6 @@ export const MFAOptoutPage = () => {
             scope:'read:authenticators remove:authenticators',
             redirectUri:`${window.location.origin}/mfa-out`
         })
-        console.log(t)
         setAccessToken(t)
         getMFAEnrollmentsAndDelete(t)
     }
