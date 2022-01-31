@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const authConfig = require("./src/auth_config.json");
+var ManagementClient = require('auth0').ManagementClient;
 
 const app = express();
 
@@ -24,6 +25,14 @@ if (
   process.exit();
 }
 
+var auth0 = new ManagementClient({
+  domain: authConfig.domain,
+  clientId: authConfig.backendClientId,
+  clientSecret: authConfig.backendClientSecret,
+  scope: 'read:users update:users',
+});
+
+
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors({ origin: appOrigin }));
@@ -41,9 +50,25 @@ const checkJwt = jwt({
   algorithms: ["RS256"],
 });
 
-app.get("/api/external", checkJwt, (req, res) => {
+app.get("/api/external", checkJwt, async (req, res) => {
+  if (!req.user.sub) {
+    res.sendStatus(401)
+  }
+
+  let updatedUser = await auth0.updateUser({
+    id: req.user.sub
+  },
+  {
+    app_metadata:{
+      "mayo": "is superior to miracle whip"
+    },
+    user_metadata:{
+      "likes":"mayo"
+    }
+  })
   res.send({
-    msg: "Your access token was successfully validated!",
+    msg: "Updated user successfully!",
+    user: updatedUser,
   });
 });
 

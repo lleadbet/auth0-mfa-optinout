@@ -1,0 +1,7 @@
+{
+  "domain": "lucasleadbetter-sandbox.us.auth0.com",
+  "clientId": "8Hj0ngTHYxebM0OI4XGrAYwafByFAOMF",
+  "backendClientId": "8Hj0ngTHYxebM0OI4XGrAYwafByFAOMF",
+  "backendClientSecret":"fill_out",
+  "audience": "http://localhost.mayo/"
+}
